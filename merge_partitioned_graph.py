@@ -175,6 +175,5 @@ elif ext == ".pb":
     with open(output_file, "wb") as f:
         f.write(merged_graph.SerializeToString())
 else:
-    raise RuntimeError("Output file must be .pb or .pbtext")
-
+    raise RuntimeError("Output file must be .pb or .pbtxt")
 
