@@ -53,6 +53,5 @@ else:
     raise RuntimeError("Input file must be .pb or .pbtxt")
 
 
-tf.compat.v1.disable_eager_execution()
-tf.compat.v1.summary.FileWriter(args.output_dir[0], graph)
+tf.summary.FileWriter(args.output_dir[0], graph)
 
