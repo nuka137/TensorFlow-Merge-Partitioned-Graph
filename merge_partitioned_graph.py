@@ -44,6 +44,7 @@ def merge_partitioned_graphs(partitioned_graphs):
     for pair in send_recv_pairs:
         src_node_and_port = None
         dst_node_and_port = None
+        dst_node_and_port_list = []
         for node in merged_graph.node:
             for i, input_full_name in enumerate(pair[0].input):
                 str_list = input_full_name.split(":")
@@ -81,20 +82,22 @@ def merge_partitioned_graphs(partitioned_graphs):
                         "port": input_port,
                         "index": i
                     }
+                    dst_node_and_port_list.append(dst_node_and_port)
 
         if src_node_and_port is None:
             raise RuntimeError(
                     "_Send input node '{}' is not found. (Node name: {})"
                     .format(pair[0].input, pair[0].name))
-        if dst_node_and_port is None:
+        if not dst_node_and_port_list:
             raise RuntimeError(
                     "_Recv output is not found. (Node name: {})"
                     .format(pair[1].name))
 
-        rewrite_node_pairs.append({
-            "src": src_node_and_port,
-            "dst": dst_node_and_port
-        })
+        for dst in dst_node_and_port_list:
+            rewrite_node_pairs.append({
+                "src": src_node_and_port,
+                "dst": dst
+            })
 
     # rewrite destination node's input
     for pair in rewrite_node_pairs:
