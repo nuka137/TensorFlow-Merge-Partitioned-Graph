@@ -180,5 +180,3 @@ elif ext == ".pb":
 else:
     raise RuntimeError("Output file must be .pb or .pbtxt")
 
-
-
